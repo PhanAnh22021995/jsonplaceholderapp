@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { Navbar } from "react-bootstrap";
+import { Outlet, Link, NavLink } from "react-router-dom";
+import "./App.css";
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar className="bg-dark">
+        <div className="container">
+          <div className="row">
+            <div className="col xs-12">
+              <div className="collapse navbar-collapse">
+                <ul className="navbar-nav">
+                  <li className="nav-item">
+                    <NavLink to="/users" className="nav-link px-0 pe-4">
+                      Users
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink to="/photos" className="nav-link px-0 pe-4">
+                      Photos
+                    </NavLink>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Navbar>
+      <div className="container">
+        <Outlet />
+      </div>
     </div>
   );
 }
-
-export default App;
