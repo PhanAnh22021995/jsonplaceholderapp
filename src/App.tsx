@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Navbar } from "react-bootstrap";
-import { Outlet, Link, NavLink } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 import "./App.css";
 
 export default function App() {

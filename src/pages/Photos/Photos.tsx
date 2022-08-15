@@ -72,37 +72,44 @@ export default function Photos() {
       </form>
       {active ? (
         <div className="row">
-          {photos.map((photo: any, index: number) => (
-            <div key={index} className="col mb-4 col-3">
-              <div className="w-100">
-                <div className="card">
-                  <img
-                    src={photo.thumbnailUrl}
-                    alt={photo.title}
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <div className="card-text">
-                      <h5 className="w-full text-truncate card-title">
-                        {photo.title}
-                      </h5>
-                      Id: #{photo.id}
-                      <br />
-                      Album Id: #{photo.albumId}
+          {photos ? (
+            photos.map((photo: any, index: number) => (
+              <div key={index} className="col mb-4 col-3">
+                <div className="w-100">
+                  <div className="card">
+                    <img
+                      src={photo.thumbnailUrl}
+                      alt={photo.title}
+                      className="card-img-top"
+                    />
+                    <div className="card-body">
+                      <div className="card-text">
+                        <h5 className="w-full text-truncate card-title">
+                          {photo.title}
+                        </h5>
+                        Id: #{photo.id}
+                        <br />
+                        Album Id: #{photo.albumId}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div>Loading...</div>
+          )}
+
+          <div className="row">
+            <div className="w-100 text-center">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={onLoadMore}
+              >
+                Load more
+              </button>
             </div>
-          ))}
-          <div className="col text-center md-12">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={onLoadMore}
-            >
-              Load More
-            </button>
           </div>
         </div>
       ) : (

@@ -24,7 +24,7 @@ const Users = () => {
       <h2 className="fw-bold">Users</h2>
       <Table className="table-striped table-hover ">
         <thead className="solid">
-          <tr>
+          <tr className="bg-white">
             <th className="text-left" style={{ maxWidth: "150px" }}>
               id
             </th>

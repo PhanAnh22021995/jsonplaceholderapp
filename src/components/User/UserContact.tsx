@@ -4,7 +4,9 @@ import { useParams } from "react-router-dom";
 import TableAlbum from "../TableAlbums/TableAlbum";
 
 const UserInfo = () => {
-  const [users, setUsers] = useState<any>([]);
+  const [users, setUsers] = useState<any>({});
+  const [edit, setEdit] = useState<boolean>(false);
+  const [active, setActive] = useState<boolean>(true);
 
   const { userId } = useParams();
   const USERS = `https://jsonplaceholder.typicode.com/users/${userId}`;
@@ -13,7 +15,40 @@ const UserInfo = () => {
     axios.get(USERS).then((res) => {
       setUsers(res.data);
     });
-  }, []);
+  }, [USERS]);
+
+  const [contactEdit, setContactEdit] = useState<any>({
+    email: "",
+    phone: "",
+    website: "",
+  });
+
+  const handleChangeContact = (e: any) => {
+    setActive(false);
+    const { name, value } = e.target;
+    setContactEdit((prev: any) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
+  const handleSubmitContact = async (e: any) => {
+    e.preventDefault();
+    const res = await axios.put(USERS, contactEdit);
+    if (res.status === 200) {
+      setUsers({ ...users, ...contactEdit });
+      setEdit(false);
+    }
+  };
+
+  const handleEditContact = () => {
+    setEdit(!edit);
+
+    setContactEdit({
+      email: users.email,
+      phone: users.phone,
+      website: users.website,
+    });
+  };
 
   return (
     <>
@@ -136,37 +171,108 @@ const UserInfo = () => {
                       <h4 className="h4 text-info">Contact:</h4>
                     </div>
                   </div>
-                  <div className="mb-2 col-12">
-                    <div className="row">
-                      <div className="col-lg-3 col-4">
-                        <p className="mb-0">Email:</p>
+                  {edit ? (
+                    <>
+                      <form onSubmit={handleSubmitContact}>
+                        <div className="mb-3 row">
+                          <div className="col-12">
+                            <div className="">
+                              <label className="form-label">Email:</label>
+                              <input
+                                type="email"
+                                name="email"
+                                value={contactEdit.email}
+                                className="form-control"
+                                onChange={handleChangeContact}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mb-3 row">
+                          <div className="col-12">
+                            <div className="">
+                              <label className="form-label">Phone:</label>
+                              <input
+                                type="phone"
+                                name="phone"
+                                value={contactEdit.phone}
+                                className="form-control"
+                                onChange={handleChangeContact}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="mb-3 row">
+                          <div className="col-12">
+                            <div className="">
+                              <label className="form-label">Website:</label>
+                              <input
+                                type="website"
+                                name="website"
+                                value={contactEdit.website}
+                                className="form-control"
+                                onChange={handleChangeContact}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-12">
+                            <div className="d-flex items-center gap-3">
+                              <button
+                                type="submit"
+                                className="btn btn-success"
+                                disabled={active}
+                              >
+                                Submit
+                              </button>
+                              <button type="button" className="btn btn-danger">
+                                Reset
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </>
+                  ) : (
+                    <>
+                      <div className="mb-2 col-12">
+                        <div className="row">
+                          <div className="col-lg-3 col-4">
+                            <p className="mb-0">Email:</p>
+                          </div>
+                          <div className="col-lg-9 col-8">
+                            <p className="mb-0 fw-bold">{users.email}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-3 col-4">
+                            <p className="mb-0">Website:</p>
+                          </div>
+                          <div className="col-lg-9 col-8">
+                            <p className="mb-0 fw-bold">{users.website}</p>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-3 col-4">
+                            <p className="mb-0">Phone:</p>
+                          </div>
+                          <div className="col-lg-9 col-8">
+                            <p className="mb-0 fw-bold">{users.phone}</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="col-lg-9 col-8">
-                        <p className="mb-0 fw-bold">{users.email}</p>
+                      <div className="col-12">
+                        <button
+                          type="button"
+                          className="btn btn-success"
+                          onClick={handleEditContact}
+                        >
+                          Edit
+                        </button>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-3 col-4">
-                        <p className="mb-0">Website:</p>
-                      </div>
-                      <div className="col-lg-9 col-8">
-                        <p className="mb-0 fw-bold">{users.website}</p>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-3 col-4">
-                        <p className="mb-0">Phone:</p>
-                      </div>
-                      <div className="col-lg-9 col-8">
-                        <p className="mb-0 fw-bold">{users.phone}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <button type="button" className="btn btn-success">
-                      Edit
-                    </button>
-                  </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import Photos from "./Photos";
-import Users from "./Users";
+import Photos from "./Photos/Photos";
+import Users from "./Users/Users";
 
 export { Photos, Users };

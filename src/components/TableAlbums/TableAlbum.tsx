@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 const TableAlbum = (props: any) => {
   const [albums, setAlbums] = useState<any>([]);
-
   const [inputAlbums, setInputAlbums] = useState<string>("");
 
   const { userId } = useParams();
@@ -17,9 +16,10 @@ const TableAlbum = (props: any) => {
     });
   }, [ALBUMS]);
 
-  const handleClickDelete = async (albumId: number) => {
-    await axios.delete(`${ALBUM_URL}/${albumId}`);
-    setAlbums(albums.filter((album: any) => album.id !== albumId));
+  const handleClickDelete = (id: number) => {
+    axios.delete(`${ALBUM_URL}/${id}`).then((res) => {
+      setAlbums(albums.filter((album: any) => album.id !== id));
+    });
   };
 
   const HandleClickAdd = async (e: any) => {
@@ -65,14 +65,14 @@ const TableAlbum = (props: any) => {
         </div>
       </div>
       <div className="row">
-        {albums.map((album: any) => (
+        {albums.map((album: any, index: number) => (
           <div className="mb-3 col-md-6" key={album.id}>
             <div className="d-flex items-center justify-content-between border rounded text-decoration-none text-black ">
               <div
                 className="py-2 flex-shrink-0 border-end d-flex items-center justify-content-center"
                 style={{ width: "10%" }}
               >
-                {album?.id}
+                {index + 1}
               </div>
               <div className="py-2 w-100 px-4 text-truncate fw-bold text-start">
                 {album?.title}

@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Users, Photos } from "./pages";
-import UserContent from "./components/UserInfo/UserInfo";
+import UserContent from "./components/User/UserContact";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
